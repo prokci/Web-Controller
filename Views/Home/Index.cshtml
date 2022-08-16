@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <table class="value">
+        <tr>
+            <td>Пораметр</td>
+            <td>Значение</td>
+
+        </tr>
+        <tr>
+            <td>Температура</td>
+            <td class="text-right" id="temperature"></td>
+        </tr>
+        <tr>
+            <td>Освещённость</td>
+            <td class="text-right" id="illumination"></td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <script>
+        
+        SetGata();
+        setInterval(SetGata, 3000);
+
+
+            function SetGata(){
+
+                    
+                    fetch('/Home/GetData', {
+                        headers: { "Content-Type": "application/json" },
+                        credentials: 'include'
+                    })
+                        .then(response => {
+
+                            response.text().then(function (text) {
+                                //alert(text);
+                                var str = text.split(" ");
+                                document.getElementById("temperature").innerHTML = str[0];
+                                document.getElementById("illumination").innerHTML = str[1];
+                            });
+
+
+
+                        })
+
+                        .catch(response => alert(response))
+                }
+          
+            
+       
+        
+
+   
+    </script>
+</div>
